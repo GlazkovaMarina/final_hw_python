@@ -96,6 +96,9 @@ def findNote(choise):
                         if i.get('id') ==  choise_ID:
                             return i
                 elif choise == 2:
+                    print('Доступные имена заметок:')
+                    for i in data['note']:
+                        print(i['name'])
                     choise_name = input('Введите название заметки: ')
                     for i in data['note']:
                         if i.get('name') == choise_name:
@@ -134,6 +137,9 @@ def editNote():
                 print('\nОшибка ввода. Необходимо ввести число от 1 до 2!\n')
             if choise > 0 and choise < 3:
                 note = findNote(choise)
+                if note == None:
+                    print('Заметки с таким именем нет!')
+                    break
                 print('Предыдущий текст заметки:' , note['body'])
                 print('Если необходимо отредактировать его, то скопируйте строку и измените. Иначе просто введите новый текст: ')
                 note['body'] = input()
