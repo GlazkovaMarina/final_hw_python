@@ -35,7 +35,15 @@ def saveNote(note):
 def createNote():
     note = { 'id': 0, 'name': 'New note', 'body': 'test note', 'date': '1.1.2023', 'time': '00:00'
 }
-    note['id'] = 0
+    id = 0
+    if os.path.exists("notes.json"):
+        try:
+            with open('notes.json', 'r') as file:
+                data = json.load(file)
+                id = len(data['note'])
+        except OSError:
+            print("Произошла ошибка при работе с файлом при считывании id заметок!")
+    note['id'] = id
     note['name'] = input("Введите название: ")
     note['body'] = input("Введите текст заметки: ")
     now = datetime.now()
