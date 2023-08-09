@@ -8,7 +8,12 @@ def readNotes():
             with open('notes.json', 'r') as file:
                 data = json.load(file)
                 for i in data['note']:
-                    print(i)
+                    print('ID:', i['id'])
+                    print('Название заметки:', i['name'])
+                    print('Содержание заметки:', i['body'])
+                    print('Дата создания:', i['date'])
+                    print('Время создания:', i['time'])
+                    print()
         except OSError:
             print("\nПроизошла ошибка при работе с файлом:(")
     else:
