@@ -11,12 +11,18 @@ def createNote():
     note['name'] = input("Введите название: ")
     note['body'] = input("Введите текст заметки: ")
     now = datetime.now()
-    note['date'] = "{}.{}.{}".format(now.day, now.month, now.year)
+    note['date'] = now.strftime('%d.%m.%Y')
     note['time'] = now.strftime('%H:%M:%S')
     print('Заметка', note.get('body'), 'под №', note.get('id'), 'c названием', note.get('name'), 'создана в', note.get('time'),  note.get('date'))
-    choise = int(input('Если хотите сохранить данную заметку, то нажмите 1, иначе 2: '))
-    if choise == 1:
-        saveNote(note)
+    choise = 3
+    while (choise != 2):
+        try:
+            choise = int(input('Если хотите сохранить данную заметку, то нажмите 1, иначе 2: '))
+        except ValueError:
+            print('Ошибка ввода. Необходимо ввести число 1 или 2!')
+        if choise == 1:
+            saveNote(note)
+            choise = 2
 
 def main():
     choise = 0
