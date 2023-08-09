@@ -66,6 +66,26 @@ def createNote():
         if choise == 1:
             saveNote(note)
             choise = 2
+
+
+def filterDate():
+    try:
+        with open('notes.json', 'r') as file:
+            data = findNote(3)
+            flag = True
+            for i in data:
+                flag = False
+                print('ID:', i['id'])
+                print('Название заметки:', i['name'])
+                print('Содержание заметки:', i['body'])
+                print('Дата создания:', i['date'])
+                print('Время создания:', i['time'])
+                print()
+            if flag:
+                print('Заметок в этот день не было!')
+
+    except OSError:
+        print('\nПроизошла ошибка при работе с файлом при фильтрации дат!\n')
 def findNote(choise):
         try:
             with open('notes.json', 'r') as file:
@@ -136,6 +156,8 @@ def main():
             editNote()
         elif choise == 4:
             readNotes()
+        elif choise == 5:
+            filterDate()
 
 
 main()
