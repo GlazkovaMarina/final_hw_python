@@ -1,12 +1,36 @@
 from datetime import datetime
 import json
-def saveNote(note):
+import os
+
+def readNotes():
     try:
-        with open('notes.json', 'a') as file:
-            json.dump(note, file, indent='\t', ensure_ascii=False)
-            file.write(';\n')
+        with open('notes.json', 'r') as file:
+            data = json.load(file)
+            print(data)
     except OSError:
         print("Произошла ошибка при работе с файлом:(")
+def saveNote(note):
+    if os.path.exists("notes.json"):
+        try:
+            data = {}
+            with open('notes.json', 'r') as file:
+                data = json.load(file)
+                data['note'].append(note)
+            with open('notes.json', 'w') as file:
+                json.dump(data, file, indent='\t', ensure_ascii=False)
+        except OSError:
+            print("Произошла ошибка при работе с файлом:(")
+    else:
+        print("Файл не найден")
+        try:
+            with open('notes.json', 'w') as file:
+                data = {}
+                data['note'] = []
+                data['note'].append(note)
+                json.dump(data, file, indent='\t', ensure_ascii=False)
+        except OSError:
+            print("Произошла ошибка при работе с файлом:(")
+
 
 def createNote():
     note = { 'id': 0, 'name': 'New note', 'body': 'test note', 'date': '1.1.2023', 'time': '00:00'
@@ -39,6 +63,8 @@ def main():
             print('Ошибка ввода. Необходимо ввести число от 1 до 6!\n')
         if choise == 1:
             createNote()
+        elif choise == 4:
+            readNotes()
 
 
 main()
