@@ -67,7 +67,6 @@ def createNote():
             saveNote(note)
             choise = 2
 
-
 def filterDate():
     try:
         with open('notes.json', 'r') as file:
@@ -83,7 +82,6 @@ def filterDate():
                 print()
             if flag:
                 print('Заметок в этот день не было!')
-
     except OSError:
         print('\nПроизошла ошибка при работе с файлом при фильтрации дат!\n')
 def findNote(choise):
@@ -127,16 +125,34 @@ def findNote(choise):
 def editNote():
     if os.path.exists("notes.json"):
         choise = 0
-        while choise < 1 or choise > 3:
+        while choise < 1 or choise > 2:
             try:
-                choise = int(input('\nВы хотите найти заметку для редактирования по: \n1 - ID,\n2 - названию,\n3 - дате создания?'))
-                if choise < 1 or choise > 3:
-                    print('\nОшибка ввода. Необходимо ввести число от 1 до 6!\n')
+                choise = int(input('\nВы хотите найти заметку для редактирования по: \n1 - ID,\n2 - названию?'))
+                if choise < 1 or choise > 2:
+                    print('\nОшибка ввода. Необходимо ввести число от 1 до 2!\n')
             except ValueError:
-                print('\nОшибка ввода. Необходимо ввести число от 1 до 6!\n')
-            if choise > 0 and choise < 4:
+                print('\nОшибка ввода. Необходимо ввести число от 1 до 2!\n')
+            if choise > 0 and choise < 3:
                 note = findNote(choise)
-                print(note)
+                print('Предыдущий текст заметки:' , note['body'])
+                print('Если необходимо отредактировать его, то скопируйте строку и измените. Иначе просто введите новый текст: ')
+                note['body'] = input()
+                now = datetime.now()
+                note['date'] = now.strftime('%d.%m.%Y')
+                note['time'] = now.strftime('%H:%M:%S')
+                #print(note)
+                try:
+                    data = {}
+                    with open('notes.json', 'r') as file:
+                        data = json.load(file)
+                        for i in range(len(data['note'])):
+                            if data['note'][i]['id'] == note['id']:
+                                data['note'][i] = note
+                                break
+                    with open('notes.json', 'w') as file:
+                        json.dump(data, file, indent='\t', ensure_ascii=False)
+                except OSError:
+                    print('\nПроизошла ошибка при работе с файлом:(\n')
     else:
         print('\nРедактировать нечего. Заметок пока еще не создавалось!\n')
 
