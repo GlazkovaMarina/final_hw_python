@@ -114,7 +114,7 @@ def editNote():
                     print('\nОшибка ввода. Необходимо ввести число от 1 до 6!\n')
             except ValueError:
                 print('\nОшибка ввода. Необходимо ввести число от 1 до 6!\n')
-            if choise >0 and choise <4:
+            if choise > 0 and choise < 4:
                 note = findNote(choise)
                 print(note)
     else:
