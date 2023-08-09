@@ -1,8 +1,12 @@
 from datetime import datetime
-
+import json
 def saveNote(note):
-    file = open('notes.txt', 'a')
-
+    try:
+        with open('notes.json', 'a') as file:
+            json.dump(note, file, indent='\t', ensure_ascii=False)
+            file.write(';\n')
+    except OSError:
+        print("Произошла ошибка при работе с файлом:(")
 
 def createNote():
     note = { 'id': 0, 'name': 'New note', 'body': 'test note', 'date': '1.1.2023', 'time': '00:00'
